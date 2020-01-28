@@ -1,6 +1,9 @@
-public class PorteinPrediction{
-  
-  public static void main(String[] args){
+import java.io.*;
+import java.util.*;
+
+public class ProteinPrediction{
+ 
+  public static void main(String[] args) throws FileNotFoundException {
     // map holding functions to a map with protein sequences and number of times a given sequence appears with the said function
     Map<String, Map<String, Integer>> functionToSequence = new HashMap<String, Map<String, Integer>>();
     
@@ -15,7 +18,7 @@ public class PorteinPrediction{
     
     // file containing all of the sequences
     String sequencesFile = "New_Balanced_FragDATABASE_34567_top2000.txt";
-    Scanner populateSequenceCount = new Scanner(new File(sequences));
+    Scanner populateSequenceFile = new Scanner(new File(sequencesFile));
     
     //file containing all of the GOTerms to the functions they correspond to
     String goTermsFile = "F_3_GO_table.txt";
@@ -23,17 +26,25 @@ public class PorteinPrediction{
     
     // reads entire sequence file and populates sequence map
     while(populateSequenceFile.hasNext()){ //might need to be .hasNextLine depending on if the file reads token for token or line for line
-      String sequence = sequencesFile.next();
+      String sequence = populateSequenceFile.next();
       sequenceCount.put(sequence, 0);
     }
+    
+    List<String> functionsToPopulate = new ArrayList<String>();
     
     // reads goterm file and populates goterm map and function count map
     while(populateGOTerms.hasNextLine()){
       String line = populateGOTerms.nextLine();
-      String goTerm = line.next();
-      String function = line.next();
+      Scanner lineScan = new Scanner(line);
+      String goTerm = lineScan.next();
+      String function = lineScan.next();
       goTerms.put(goTerm, function);
       functionCount.put(function, 0);
+      functionsToPopulate.add(function);
+    }
+    
+    for(int i = 0; i < functionsToPopulate.size(); i++){
+      functionToSequence.put(functionsToPopulate.get(i), new HashMap<String, Integer>());
     }
     
     // file containing the sequences and the functions the relate to
@@ -62,7 +73,8 @@ public class PorteinPrediction{
         // increment the number of times we have seen this sequence by one
         if(!singleSequence.contains("|")){
           sequences.add(singleSequence);
-          sequenceCount.put(singleSequence, sequenceCount.get(singleSequence)++);
+          int num = sequenceCount.get(singleSequence) + 1;
+          sequenceCount.put(singleSequence, num);
         } else {
           
           // encountering the bar means we have a sequence|function with no white space
@@ -72,8 +84,9 @@ public class PorteinPrediction{
           String first = singleSequence.substring(0, i);
           sequences.add(first);
           String second = singleSequence.substring(i + 1); //possibly need second index which goes to the end
-          functionCount.put(second, functionCount.get(second)++);
-          functionFound = true;
+          int n = functionCount.get(second) + 1;
+          functionCount.put(second, n);
+          functionNotFound = false;
           functions.add(second);
         }
       }
@@ -89,7 +102,11 @@ public class PorteinPrediction{
         String f = functions.get(i);
        
         // get the map that is mapped to the function f
-        Map<String, Integer> add = functionToSequence.get(f);
+        Map<String, Integer> add = new HashMap<String, Integer>();
+        add = functionToSequence.get(f);
+        if(add == null){
+         System.out.println("null");
+        }
         
         // remove from the map because we will add it back later with a modified version
         functionToSequence.remove(f);
@@ -97,12 +114,34 @@ public class PorteinPrediction{
         // add to the new map each sequence that is encountered plus one because it has seen it plus one more times
         for(int j = 0; j < sequences.size(); j++){
           String s = sequences.get(j);
-          add.put(s, add.get(s)++);
+          if(add.containsKey(s)){
+            int number = add.get(s) + 1;
+            add.put(s, number);
+          } else {
+            add.put(s, 1);
+          }
         }
         
         // put the modified map back into the main map
         functionToSequence.put(f, add);
       }
     }
+    Map<String, Map<String, Double>> functionToSequenceProbability = new HashMap<String, Map<String, Double>>();
+    for(int i = 0; i < functionsToPopulate.size(); i++){
+      functionToSequenceProbability.put(functionsToPopulate.get(i), new HashMap<String, Double>());
+    }
+    
+    for(String func : functionToSequence.keySet()){
+      Map<String, Integer> seqMap = functionToSequence.get(func);
+      Map<String, Double> probMap = new HashMap<String, Double>();      
+      for(String seq : seqMap.keySet()){
+         int occ = seqMap.get(seq);
+         double probability = (double)occ / functionCount.get(func);
+         probMap.put(seq, probability);
+      }
+      functionToSequenceProbability.put(func, probMap);
+    }
+    System.out.println("done");
   }
 }
+
