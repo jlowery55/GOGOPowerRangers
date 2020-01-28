@@ -32,13 +32,36 @@ public class PorteinPrediction{
       String line = data.nextLine();
       Scanner scanLine = new Scanner(line);
       List<String> sequences = new ArrayList<String>();
-      while(scanLine.hasNext()){
+      List<String> functions = new ArrayList<String>();
+      boolean functionNotFound = true;
+      while(functionNotFound){
         String singleSequence = scanLine.next();
         if(!singleSequence.contains("|")){
           sequences.add(singleSequence);
+          sequenceCount.put(singleSequence, sequenceCount.get(singleSequence)++);
         } else {
-          
+          int i = singleSequence.indexOf('|');
+          String first = singleSequence.substring(0, i);
+          String second = singleSequence.substring(i + 1); //possibly need second index which goes to the end
+          functionCount.put(second, functionCount.get(second)++);
+          functionFound = true;
+          functions.add(second);
         }
+      }
+      while(scanLine.hasNext()){
+        String function = scanLine.next();
+        functions.add(function);
+      }
+      
+      for(int i = 0; i < functions.size(); i++){
+        String f = functions.get(i);
+        Map<String, Integer> add = functionToSequence.get(f);
+        functionToSequence.remove(f);
+        for(int j = 0; j < sequences.size(); j++){
+          String s = sequences.get(j);
+          add.put(s, add.get(s)++);
+        }
+        functionToSequence.put(f, add);
       }
     }
   }
