@@ -25,7 +25,21 @@ public class PorteinPrediction{
       functionCount.put(function, 0);
     }
     
-    String data = "New_filtered_balanced_protein_language_data_34567_top2000.txt";
+    String inputFile = "New_filtered_balanced_protein_language_data_34567_top2000.txt";
+    Scanner data = new Scanner(new File(inputFile));
     
+    while(data.hasNextLine()){
+      String line = data.nextLine();
+      Scanner scanLine = new Scanner(line);
+      List<String> sequences = new ArrayList<String>();
+      while(scanLine.hasNext()){
+        String singleSequence = scanLine.next();
+        if(!singleSequence.contains("|")){
+          sequences.add(singleSequence);
+        } else {
+          
+        }
+      }
+    }
   }
 }
