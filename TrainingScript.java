@@ -151,7 +151,8 @@ public class ProteinPrediction{
      Map<String, Double> map = functionToSequenceProbability.get(func);
      for(String seq : map.keySet()){
     	 double prob = map.get(seq);
-    	 System.out.println(seq + " " + func + " " + prob);
+    	 double logProb = Math.log10(prob);
+    	 System.out.println(seq + " " + func + " " + logProb);
      }
     }
   }
