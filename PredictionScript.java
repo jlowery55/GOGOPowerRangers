@@ -8,8 +8,8 @@ public class FastaFunctionPrediction {
     String fileName = "result.txt";
     Scanner input = new Scanner(new File(fileName));
     
-    while(input.hasNextLine()){
-      String line = input.nextLine();
+    while(input.hasNext()){
+     // String line = input.nextLine();
       
       String seq = input.next();
       String func = input.next();
@@ -22,11 +22,20 @@ public class FastaFunctionPrediction {
       funcToProb.put(func, prob);
       sequenceMap.put(seq, funcToProb);
     }
-    
+  //  System.out.print(sequenceMap);
+ 
     String fasta = "selected.fasta";
     Scanner fastaInput = new Scanner(new File(fasta));
     
-    Set<String> sequenceSet = new HashSet<String>(); // set that will contain all sequence words
+    Set<String> sequenceSet = new HashSet<String>();
+    String wordNames = "New_Balanced_FragDATABASE_34567_top2000.txt";
+    Scanner inWord = new Scanner(new File(wordNames));
+    while(inWord.hasNextLine()) {
+    	String seq = inWord.nextLine();
+    	//String seqWord = seq,next();
+    	sequenceSet.add(seq);
+    }
+    // set that will contain all sequence words
     while(fastaInput.hasNextLine()){
       String name = fastaInput.nextLine();
       String seq = fastaInput.nextLine();
@@ -43,10 +52,12 @@ public class FastaFunctionPrediction {
           words.add(large);
         }
       }
+      //System.out.println(sequenceSet);
+      
       Map<String, Double> functionTotalProb = new HashMap<String, Double>();
       for(int i = 0; i < words.size(); i++){
         String word = words.get(i);
-        Map<String, Double> map = sequenceMap.get(seq);
+        Map<String, Double> map = sequenceMap.get(word);
         for(String func : map.keySet()){
           if(functionTotalProb.containsKey(func)){
             double prob = functionTotalProb.get(func);
@@ -71,7 +82,7 @@ public class FastaFunctionPrediction {
       Scanner in = new Scanner(new File(inFile));
       
       Map<Double, String> result = new TreeMap<Double, String>();
-      while(in.hasNextLine()){
+      while(in.hasNext()){
         double probA = in.nextDouble();
         String function = in.next();
         result.put(probA, function);
@@ -88,11 +99,12 @@ public class FastaFunctionPrediction {
         if(i == 10) {
           break;
         }
+        //declare this at the beginning, overwrites each sequence, only saving the last sequence
+        //weight probabilities
+        //swap function word for GO Terms
+        //add fasta sequence names
+        //format output correctly for Cao's prediction tool
       }
-      
+      }
     }
-    
-    
-    
   }
-}
