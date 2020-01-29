@@ -137,32 +137,22 @@ public class ProteinPrediction{
       for(String seq : seqMap.keySet()){
          int occ = seqMap.get(seq);
          double newOcc= (double)occ;
-         double newSeq= (double)sequenceCount.get(seq);
+         double newSeq=(double)sequenceCount.get(seq);
          double probability = newOcc/newSeq;
          probMap.put(seq, probability);
       }
       functionToSequenceProbability.put(func, probMap);
     }
-    System.out.println("done");
-   String outputFile = "result.txt";
-   PrintStream out = new PrintStream(new File(outputFile));
-   System.setOut(out);
-   
-   for(String func : functionToSequence.keySet()){
-    Map<String, Double> map = functionToSequence.get(func);
-    for(String seq : map.keySet()){
-     System.out.println(seq + " " + func + " " map.get(func));
+    String outputFile = "result.txt";
+    PrintStream out = new PrintStream(new File(outputFile));
+    System.setOut(out);
+    
+    for(String func : functionToSequenceProbability.keySet()){
+     Map<String, Double> map = functionToSequenceProbability.get(func);
+     for(String seq : map.keySet()){
+    	 double prob = map.get(seq);
+    	 System.out.println(seq + " " + func + " " + prob);
+     }
     }
-   }
-   
-   
-   
-   
-   
-   
-   
-   
-   
   }
 }
-
