@@ -1,9 +1,9 @@
 import java.util.*;
 import java.io.*;
 
-public class PredictionScript {
+public class FastaFunctionPrediction {
   
-  public static void main(String[] args) throws new FileNotFoundException {
+  public static void main(String[] args) throws FileNotFoundException {
     Map<String, Map<String, Double>> sequenceMap = new HashMap<String, Map<String, Double>>();
     String fileName = "result.txt";
     Scanner input = new Scanner(new File(fileName));
@@ -19,8 +19,8 @@ public class PredictionScript {
       if(sequenceMap.containsKey(seq)) {
         funcToProb = sequenceMap.get(seq);
       }
-      funcToProb.add(func, prob);
-      sequenceMap.add(seq, funcToProb);
+      funcToProb.put(func, prob);
+      sequenceMap.put(seq, funcToProb);
     }
     
     String fasta = "selected.fasta";
@@ -51,7 +51,7 @@ public class PredictionScript {
           if(functionTotalProb.containsKey(func)){
             double prob = functionTotalProb.get(func);
             double newProb = map.get(func);
-            functionTotalProb.put(func, prop + newProb);
+            functionTotalProb.put(func, prob + newProb);
           } else {
             double newProb = map.get(func);
             functionTotalProb.put(func, newProb);
@@ -62,19 +62,19 @@ public class PredictionScript {
       PrintStream out = new PrintStream(new File(outFile));
       System.setOut(out);
       
-      for(String func : functionTotalProb.keySet)) {
-        double prob = funcitonTotalProb.get(func);
+      for(String func : functionTotalProb.keySet()) {
+        double prob = functionTotalProb.get(func);
         System.out.println(prob + " " + func);
       }
       
       String inFile = "help.txt";
       Scanner in = new Scanner(new File(inFile));
       
-      Map<double, String> result = new TreeMap<double, String>();
+      Map<Double, String> result = new TreeMap<Double, String>();
       while(in.hasNextLine()){
-        double proba = in.nextDouble();
+        double probA = in.nextDouble();
         String function = in.next();
-        result.add(proba, function);
+        result.put(probA, function);
       }
       
       String res = "res.txt";
