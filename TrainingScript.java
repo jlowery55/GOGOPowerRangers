@@ -144,6 +144,25 @@ public class ProteinPrediction{
       functionToSequenceProbability.put(func, probMap);
     }
     System.out.println("done");
+   String outputFile = "result.txt";
+   PrintStream out = new PrintStream(new File(outputFile));
+   System.setOut(out);
+   
+   for(String func : functionToSequence.keySet()){
+    Map<String, Double> map = functionToSequence.get(func);
+    for(String seq : map.keySet()){
+     System.out.println(seq + " " + func + " " map.get(func));
+    }
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
   }
 }
 
