@@ -136,7 +136,9 @@ public class ProteinPrediction{
       Map<String, Double> probMap = new HashMap<String, Double>();      
       for(String seq : seqMap.keySet()){
          int occ = seqMap.get(seq);
-         double probability = (double)occ / sequenceCount.get(seq);
+         double newOcc= (double)occ;
+         double newSeq= (double)sequenceCount.get(seq);
+         double probability = newOcc/newSeq;
          probMap.put(seq, probability);
       }
       functionToSequenceProbability.put(func, probMap);
