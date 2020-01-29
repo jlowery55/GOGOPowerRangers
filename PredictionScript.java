@@ -23,6 +23,17 @@ public class PredictionScript {
       sequenceMap.add(seq, funcToProb);
     }
     
+    String fasta = "selected.fasta";
+    Scanner fastaInput = new Scanner(new File(fasta));
+    
+    Map<String, String> inputSequences = new HashMap<String, String>();
+    while(fastaInput.hasNextLine()){
+      String name = fastaInput.nextLine();
+      String seq = fastaInput.nextLine();
+      
+      inputSequences.put(name, seq);
+    }
+    
     
   }
 }
