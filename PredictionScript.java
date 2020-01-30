@@ -95,7 +95,7 @@ public class FastaFunctionPrediction {
       String inFile = "help.txt";
       Scanner in = new Scanner(new File(inFile));
       
-      Map<Double, String> result = new TreeMap<Double, String>();
+      Map<Double, String> result = new TreeMap<Double, String>(Collections.reverseOrder());
       while(in.hasNext()){
         double probA = in.nextDouble();
         String function = in.next();
@@ -104,9 +104,14 @@ public class FastaFunctionPrediction {
  
       System.setOut(fin);
       int i = 0;
+      double max = 0;
       for(double value : result.keySet()){
         i++;
+        if(i == 1) {
+        	max = value;
+        }
         String fun = result.get(value);
+        value = value / max;
         System.out.println(name + " " + functionToGoTerm.get(fun) + " " + value);
         if(i == 10) {
           break;
