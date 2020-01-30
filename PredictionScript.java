@@ -56,6 +56,7 @@ public class FastaFunctionPrediction {
     // set that will contain all sequence words
     while(fastaInput.hasNextLine()){
       String name = fastaInput.nextLine();
+      String fastaName = name.replace(">","");
       String seq = fastaInput.nextLine();
       
       List<String> words = new ArrayList<String>();
@@ -116,17 +117,18 @@ public class FastaFunctionPrediction {
         }
         String fun = result.get(value);
         value = value / max;
-        System.out.println(name + " " + functionToGoTerm.get(fun) + " %.2f" + value);
+        System.out.print(fastaName + " " + functionToGoTerm.get(fun) + " ");
+        System.out.format("%.2f\n", value);
         if(i == 10) {
           break;
         }
       }
-      System.out.println("END");
         //declare this at the beginning, overwrites each sequence, only saving the last sequence
         //weight probabilities
         //swap function word for GO Terms
         //add fasta sequence names
         //format output correctly for Cao's prediction too
       }
+    System.out.println("END");
     }
   }
