@@ -10,6 +10,10 @@ public class FastaFunctionPrediction {
     
     String res = "res.txt";
     PrintStream fin = new PrintStream(new File(res));
+    System.setOut(fin);
+    System.out.println("AUTHOR  DylanZ,JoeyL,AdrianR,AlexR");
+    System.out.println("MODEL 16");
+    System.out.println("KEYWORDS  probability, very accurate, log functions, xD");
     
     
     Map<String, String> functionToGoTerm = new HashMap<String, String>();
@@ -112,11 +116,12 @@ public class FastaFunctionPrediction {
         }
         String fun = result.get(value);
         value = value / max;
-        System.out.println(name + " " + functionToGoTerm.get(fun) + " " + value);
+        System.out.println(name + " " + functionToGoTerm.get(fun) + " %.2f" , value);
         if(i == 10) {
           break;
         }
       }
+      System.out.println("END");
         //declare this at the beginning, overwrites each sequence, only saving the last sequence
         //weight probabilities
         //swap function word for GO Terms
