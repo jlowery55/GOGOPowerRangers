@@ -107,7 +107,7 @@ public class FastaFunctionPrediction {
       for(double value : result.keySet()){
         i++;
         String fun = result.get(value);
-        System.out.println(fun + " " + value);
+        System.out.println(name + " " + functionToGoTerm.get(fun) + " " + value);
         if(i == 10) {
           break;
         }
