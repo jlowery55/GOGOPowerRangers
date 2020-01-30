@@ -8,6 +8,20 @@ public class FastaFunctionPrediction {
     String fileName = "result.txt";
     Scanner input = new Scanner(new File(fileName));
     
+    String res = "res.txt";
+    PrintStream fin = new PrintStream(new File(res));
+    
+    
+    Map<String, String> functionToGoTerm = new HashMap<String, String>();
+    String goTermsFile = "F_3_GO_table.txt";
+    Scanner populateGoTerms = new Scanner(new File(goTermsFile));
+    while(populateGoTerms.hasNext()){
+      String goTerm = populateGoTerms.next();
+      String function = populateGoTerms.next();
+      functionToGoTerm.put(function, goTerm);
+    }
+    
+    
     while(input.hasNext()){
      // String line = input.nextLine();
       
@@ -87,9 +101,7 @@ public class FastaFunctionPrediction {
         String function = in.next();
         result.put(probA, function);
       }
-      
-      String res = "res.txt";
-      PrintStream fin = new PrintStream(new File(res));
+ 
       System.setOut(fin);
       int i = 0;
       for(double value : result.keySet()){
@@ -99,12 +111,12 @@ public class FastaFunctionPrediction {
         if(i == 10) {
           break;
         }
+      }
         //declare this at the beginning, overwrites each sequence, only saving the last sequence
         //weight probabilities
         //swap function word for GO Terms
         //add fasta sequence names
-        //format output correctly for Cao's prediction tool
-      }
+        //format output correctly for Cao's prediction too
       }
     }
   }
