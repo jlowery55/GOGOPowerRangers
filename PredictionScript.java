@@ -116,7 +116,7 @@ public class FastaFunctionPrediction {
         }
         String fun = result.get(value);
         value = value / max;
-        System.out.println(name + " " + functionToGoTerm.get(fun) + " %.2f" , value);
+        System.out.println(name + " " + functionToGoTerm.get(fun) + " %.2f" + value);
         if(i == 10) {
           break;
         }
