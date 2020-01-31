@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class ProteinPrediction{
+public class TrainingScript{
  
   public static void main(String[] args) throws FileNotFoundException {
     // map holding functions to a map with protein sequences and number of times a given sequence appears with the said function
