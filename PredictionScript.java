@@ -3,7 +3,7 @@ import java.io.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class FastaFunctionPrediction {
+public class PredictionScript {
   
   public static void main(String[] args) throws FileNotFoundException {
 	DecimalFormat df = new DecimalFormat("#.##");
