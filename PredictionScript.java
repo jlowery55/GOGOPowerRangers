@@ -1,9 +1,15 @@
 import java.util.*;
 import java.io.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class FastaFunctionPrediction {
   
   public static void main(String[] args) throws FileNotFoundException {
+	DecimalFormat df = new DecimalFormat("#.##");
+    df.setRoundingMode(RoundingMode.DOWN);
+    df.setDecimalSeparatorAlwaysShown(true);
+    df.setMinimumFractionDigits(2);
     Map<String, Map<String, Double>> sequenceMap = new HashMap<String, Map<String, Double>>();
     String fileName = "result.txt";
     Scanner input = new Scanner(new File(fileName));
@@ -11,9 +17,9 @@ public class FastaFunctionPrediction {
     String res = "res.txt";
     PrintStream fin = new PrintStream(new File(res));
     System.setOut(fin);
-    System.out.println("AUTHOR  DylanZ,JoeyL,AdrianR,AlexR");
-    System.out.println("MODEL 16");
-    System.out.println("KEYWORDS  probability, very accurate, log functions, xD");
+    System.out.println("AUTHOR\tGroup1:DylanZ,JoeyL,AdrianR,AlexR");
+    System.out.println("MODEL\t16");
+    System.out.println("KEYWORDS\tprobability, very accurate, log functions, xD");
     
     
     Map<String, String> functionToGoTerm = new HashMap<String, String>();
@@ -117,18 +123,13 @@ public class FastaFunctionPrediction {
         }
         String fun = result.get(value);
         value = value / max;
-        System.out.print(fastaName + " " + functionToGoTerm.get(fun) + " ");
-        System.out.format("%.2f\n", value);
+        System.out.printf(fastaName + "\t" + functionToGoTerm.get(fun) + "\t");
+        System.out.println(df.format(value));
         if(i == 10) {
           break;
         }
       }
-        //declare this at the beginning, overwrites each sequence, only saving the last sequence
-        //weight probabilities
-        //swap function word for GO Terms
-        //add fasta sequence names
-        //format output correctly for Cao's prediction too
-      }
+     }
     System.out.println("END");
     }
   }
