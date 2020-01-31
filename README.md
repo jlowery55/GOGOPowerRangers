@@ -1,5 +1,5 @@
 # CS487Final
-Main home for our Bioinformatics Final
+Explanation of our prediction program, and how to run it.
 
 TrainingScript.java is a program to calculate the probabilites of sequence "words" appearing with specific protein functions. This is accomplished by creating a map that has functions as sequences that map to another map of sequences with those values being the number of times the key "word" is mapped to the original key function. 
 
@@ -8,4 +8,4 @@ We keep a count of total amount of times each word is seen in the data set we ar
 After the result is printed it is then read in by PredictionScript.java. This takes in the word sequences first and then uses these as keys which maps to new maps containing functions as keys and the probabilities as values. We then begin reading in the fasta file. We iterate through the sequence searching the database of words for matches and add it to a list for every hit we get. We then iterated through this map and added up the probabilites to given each sequence and function pair a weight. 
 These pairs are then ordered by highest total probability and printed out.
 
-To run this program, make sure to have New_Balanced_FragDATABASE_34567_top2000.txt, F_3_GO_table.txt, New_filtered_balanced_protein_language_data_34567_top2000.txt, TrainingScript.java, and PredictionScript.java in the same file. Run TrainingScript.java to train the model. Then run PredictionScript.java to get the protein function predictions. Make sure to have a file containing fasta sequences named "selected.fasta".
+To run this program, make sure to have New_Balanced_FragDATABASE_34567_top2000.txt, F_3_GO_table.txt, New_filtered_balanced_protein_language_data_34567_top2000.txt, TrainingScript.java, and PredictionScript.java in the same file. "New_filtered_balanced_protein_language_data_34567_top2000.txt" is in included in the "necessaryFile.zip" folder. Run TrainingScript.java to train the model. Then run PredictionScript.java to get the protein function predictions. Make sure to have a file containing fasta sequences named "selected.fasta".
